@@ -1,98 +1,296 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Prysm Mini CRM Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
+![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+A role-based CRM backend built with NestJS, PostgreSQL, Prisma ORM, and JWT authentication. Implements secure authentication, user management, customer management, and task workflows with full API documentation via Swagger.
 
-## Description
+## Tech Stack
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+* Node.js
+* NestJS
+* PostgreSQL
+* Prisma ORM
+* JWT Authentication
+* Swagger API Docs
 
-## Project setup
+## Features
 
+* JWT-based Authentication (ADMIN / EMPLOYEE roles)
+* User Management (Admin only)
+* Customer CRUD with Pagination
+* Task Assignment and Status Management
+* Role-based Access Control
+* Swagger Interactive API Documentation
+* Input validation using DTOs
+* Prisma migrations and schema management
+* Pagination support for customer listing
+
+## 📸 API Documentation Preview (Swagger)
+
+Swagger provides an interactive UI to explore and test all APIs with JWT authentication.
+
+### 🔹 API Overview
+![Swagger Home](docs/home.png)
+
+### 🔹 JWT Authorization
+![Swagger Auth](docs/authorize.png)
+
+### 🔹 Endpoint Testing Example
+![Swagger Endpoint](docs/create_task.png)
+
+
+## Roles & Permissions
+
+| Role | Permissions |
+|------|-------------|
+| ADMIN | Manage users, customers, tasks |
+| EMPLOYEE | View customers, manage own tasks |
+
+## Error Handling
+
+| Status Code | Meaning |
+|-------------|---------|
+| 400 | Validation error |
+| 401 | Unauthorized |
+| 403 | Forbidden |
+| 404 | Resource not found |
+| 409 | Duplicate record |
+
+## Project Setup
+
+### 1. Clone Repository
 ```bash
-$ npm install
+git clone <your-repo-url>
+cd prysm-mini-crm/backend
 ```
 
-## Compile and run the project
-
+### 2. Install Dependencies
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
 ```
 
-## Run tests
+## Environment Variables
 
-```bash
-# unit tests
-$ npm run test
+Create a `.env` file in the backend root.
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+### .env.example
+```
+DATABASE_URL="postgresql://postgres:password@localhost:5432/prysm_crm"
+JWT_SECRET="super-secret-jwt-key"
+PORT=3000
 ```
 
-## Deployment
+**Note:** Replace credentials based on your local PostgreSQL setup.
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+## Database Setup & Migration (Prisma)
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
+### 1. Make sure PostgreSQL is running
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+sudo service postgresql start
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 2. Create Database (if not exists)
 
-## Resources
+Login to postgres shell:
+```bash
+psql -U postgres
+```
+```sql
+CREATE DATABASE prysm_crm;
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+Exit:
+```
+\q
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### 3. Run Prisma Migration
+```bash
+npx prisma migrate dev --name init
+```
 
-## Support
+This will:
+* Create tables
+* Apply schema
+* Generate Prisma client
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### 4. (Optional) Prisma Studio
 
-## Stay in touch
+To visually inspect database:
+```bash
+npx prisma studio
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Running the Server
 
-## License
+### Development Mode
+```bash
+npm run start:dev
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### Production Build
+```bash
+npm run build
+node dist/src/main.js
+```
+
+Server will start at:
+```
+http://localhost:3000
+```
+
+## Swagger API Documentation
+
+Once server is running, open:
+```
+http://localhost:3000/api
+```
+
+### Swagger Features
+
+* All endpoints documented
+* Request/response schemas visible
+* JWT authentication supported
+* Execute APIs directly from browser
+
+### Using JWT in Swagger
+
+1. Call `/auth/login`
+2. Copy the returned `accessToken`
+3. Click Authorize button in Swagger
+4. Paste:
+```
+Bearer YOUR_TOKEN_HERE
+```
+
+5. Now you can access protected APIs.
+
+## Example API Testing
+
+### Register User
+```bash
+curl -X POST http://localhost:3000/auth/register \
+-H "Content-Type: application/json" \
+-d '{
+  "name": "Admin User",
+  "email": "admin@example.com",
+  "password": "password123",
+  "role": "ADMIN"
+}'
+```
+
+### Login
+```bash
+curl -X POST http://localhost:3000/auth/login \
+-H "Content-Type: application/json" \
+-d '{
+  "email": "admin@example.com",
+  "password": "password123"
+}'
+```
+
+### Get Customers (Authorized)
+```bash
+curl http://localhost:3000/customers \
+-H "Authorization: Bearer YOUR_TOKEN"
+```
+
+### Create Task (ADMIN)
+```bash
+curl -X POST http://localhost:3000/tasks \
+-H "Authorization: Bearer YOUR_TOKEN" \
+-H "Content-Type: application/json" \
+-d '{
+  "title": "Prepare contract",
+  "description": "Draft contract for customer",
+  "assignedToId": 2,
+  "customerId": 1
+}'
+```
+
+## Bonus Feature: Customer Search Filter
+
+The Customers API supports searching customers by name, email, or phone number.
+
+### Endpoint
+```
+GET /customers?search=<query>
+```
+
+### Description
+
+Filters customers whose:
+* **name** contains the query (case-insensitive)
+* OR **email** contains the query (case-insensitive)
+* OR **phone** contains the query
+
+Search works together with pagination parameters (page, limit).
+
+### Example Usage
+
+Search customers containing "acme":
+```bash
+curl "http://localhost:3000/customers?search=acme" \
+-H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+### Example Response
+```json
+{
+  "page": 1,
+  "limit": 10,
+  "totalRecords": 1,
+  "totalPages": 1,
+  "data": [
+    {
+      "id": 1,
+      "name": "Acme Corp",
+      "email": "contact@acme.com",
+      "phone": "9999999999",
+      "company": "Acme",
+      "createdAt": "2026-01-27T21:01:09.024Z",
+      "updatedAt": "2026-01-27T21:01:09.024Z"
+    }
+  ]
+}
+```
+
+### Combined Pagination + Search
+```bash
+curl "http://localhost:3000/customers?search=corp&page=1&limit=5" \
+-H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+### Access Control
+
+* **ADMIN** → Can search all customers
+* **EMPLOYEE** → Read-only search access
+
+## Project Structure
+```
+backend/
+ ├── src/
+ │   ├── auth/
+ │   ├── users/
+ │   ├── customers/
+ │   ├── tasks/
+ │   ├── prisma/
+ │   └── main.ts
+ ├── prisma/
+ │   └── schema.prisma
+ ├── generated/
+ ├── .env
+ └── package.json
+```
+
+## Architecture Notes
+
+* Controllers → Handle HTTP requests
+* Services → Business logic
+* DTOs → Validation layer
+* Guards → JWT & Role protection
+* Prisma Service → Database access
